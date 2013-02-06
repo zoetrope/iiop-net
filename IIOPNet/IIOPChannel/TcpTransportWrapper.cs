@@ -526,13 +526,16 @@ namespace Ch.Elca.Iiop {
                 throw CreateNotListeningException();
             }
             m_listenerActive = false;
-            if (m_listenerThread != null) {
-                try {
-                    m_listenerThread.Interrupt(); m_listenerThread.Abort();
-                } catch (Exception) { }
-            }
-            if (m_listener != null) {
+            if (m_listener != null)
+            {
                 m_listener.Stop();
+            }
+            if (m_listenerThread != null)
+            {
+                try {
+                    m_listenerThread.Interrupt();
+                    m_listenerThread.Join();
+                } catch (Exception) { }
             }
         }
         
